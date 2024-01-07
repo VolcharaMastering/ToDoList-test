@@ -2,6 +2,7 @@ const NotFound = require("../errors/notFound");
 const IncorrectData = require("../errors/requestError");
 const ServerError = require("../errors/serverError");
 const ToDoList = require("../models/ToDoList");
+const moment = require("moment");
 
 const { OK_CODE, CODE_CREATED } = require("../states/states");
 
@@ -22,6 +23,7 @@ const delTaskById = async (req, res, next) => {
       next(new NotFound("Задача не найдена"));
       return;
     }
+    res.status(OK_CODE).send(task);
   } catch (e) {
     if (e.name === "CastError") {
       next(new IncorrectData("Невалидный id "));
@@ -32,13 +34,13 @@ const delTaskById = async (req, res, next) => {
 };
 
 const createTask = async (req, res, next) => {
-  const { title, description, lastChangeDate, state, taskLink } = req.body;
+  const { title, description, state, taskLink } = req.body;
+
   try {
     const task = await new ToDoList({
       title,
       description,
-      lastChangeDate,
-      state,
+      not_started: state,
       taskLink,
     }).save();
     res.status(CODE_CREATED).send(task);
@@ -59,8 +61,9 @@ const createTask = async (req, res, next) => {
   }
 };
 const updateTaskById = async (req, res, next) => {
-  const { taskId, title, description, lastChangeDate, state, taskLink } =
-    req.body;
+  const { title, description, state, taskLink } = req.body;
+  const { taskId } = req.params;
+  const lastChangeDate = new Date();
   try {
     const task = await ToDoList.findByIdAndUpdate(taskId, {
       title,
@@ -73,6 +76,8 @@ const updateTaskById = async (req, res, next) => {
       next(new NotFound("Задача не найдена"));
       return;
     }
+    const returnTask = await ToDoList.findById(taskId);
+    res.status(CODE_CREATED).send(returnTask);
   } catch (e) {
     if (e.name === "CastError") {
       next(new IncorrectData("Невалидный id "));

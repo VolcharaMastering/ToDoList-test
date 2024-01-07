@@ -2,14 +2,10 @@ const { celebrate, Joi } = require("celebrate");
 const { ObjectId } = require("mongoose").Types;
 const validUrl = require("validator/lib/isURL");
 
-const validateId = (value, helpers) => {
-  if (!ObjectId.isValid(value)) {
-    return helpers.error("any.invalid");
-  }
-  return value;
-};
-
 const validLink = (value, helpers) => {
+  if (!value) {
+    return value;
+  }
   if (validUrl(value)) {
     return value;
   }
@@ -23,13 +19,18 @@ const validTitle = (value, helpers) => {
   return value;
 };
 const validState = (value, helpers) => {
-  if (
-    value !== "done" ||
-    value !== "in_process" ||
-    value !== "paused" ||
-    value !== "not_started" ||
-    value !== "stopped"
-  ) {
+  if (!value) {
+    return value; // Allow empty string
+  }
+  const allowedStates = [
+    "done",
+    "in_process",
+    "paused",
+    "not_started",
+    "stopped",
+  ];
+
+  if (!allowedStates.includes(value)) {
     return helpers.error("any.invalid");
   }
   return value;
@@ -38,14 +39,13 @@ const validState = (value, helpers) => {
 const validateTask = celebrate({
   body: Joi.object().keys({
     title: Joi.string().required().min(2).max(40).custom(validTitle),
-    description: Joi.string().max(1000).required(),
-    lastChangeDate: Joi.date().iso().required(),
-    state: Joi.string().required().custom(validTitle).custom(validState),
-    taskLink: Joi.string().required().custom(validLink),
+    description: Joi.string().max(1000),
+    lastChangeDate: Joi.date().iso(),
+    state: Joi.custom(validState),
+    taskLink: Joi.custom(validLink),
   }),
 });
 
 module.exports = {
-  validateId,
   validateTask,
 };

@@ -1,7 +1,7 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const { errors } = require('celebrate');
+const { errors } = require("celebrate");
 const cors = require("cors");
 const rateLimit = require("./utils/rateLimit");
 const errorHandler = require("./middlewares/errorHandler");
@@ -21,20 +21,12 @@ app.use("*", (req, res, next) => {
   next(new NotFound("Страница не найдена"));
 });
 
-// app.use(errorLogger);
-
 app.use(errors());
 app.use(errorHandler);
 
 async function connect() {
   await mongoose.connect(
-    NODE_ENV === "production"
-      ? MONGO_URL
-      : "mongodb://localhost:27017/tasksdb",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: false,
-    }
+    NODE_ENV === "production" ? MONGO_URL : "mongodb://localhost:27017/tasksdb"
   );
 
   app.listen(PORT);

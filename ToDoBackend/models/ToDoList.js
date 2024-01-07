@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const validUrl = require("validator");
+const moment = require("moment");
 
 const toDoListSchema = new mongoose.Schema({
   title: {
     type: String,
     minlength: [2, "Длина имени не меньше 2х символов"],
-    maxlength: [100, "Длина имени не более 100 символов"],
+    maxlength: [40, "Длина имени не более 40 символов"],
     required: [true, 'Поле "Название" должно быть заполнено'],
   },
   description: {
@@ -15,34 +15,23 @@ const toDoListSchema = new mongoose.Schema({
   addDate: {
     type: Date,
     default: Date.now,
-    get: function () {
-      return moment(this.getDataValue("addDate")).format("DD-MM-YYYY HH:mm:ss");
-    },
     immutable: true,
   },
   lastChangeDate: {
     type: Date,
     default: Date.now,
-    get: function () {
-      return moment(this.getDataValue("addDate")).format("DD-MM-YYYY HH:mm:ss");
-    },
+    required: true,
   },
   state: {
     type: String,
-    enum: ["done", "in_process", "paused", "not_started", "stopped"],
     default: "not_started",
-    required: [true, 'Поле "Состояние задачи" не пустое'],
+    enum: ["done", "in_process", "paused", "not_started", "stopped"],
+    required: false,
   },
   taskLink: {
     type: String,
     required: false,
-    validate: {
-      validator(val) {
-        return validUrl.isURL(val);
-      },
-      message: "Проверьте формат ссылки",
-    },
   },
 });
 
-module.exports = mongoose.model("toDoList", toDoListSchema.methods.toJSON);
+module.exports = mongoose.model("toDoList", toDoListSchema);
