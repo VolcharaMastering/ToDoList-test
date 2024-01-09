@@ -1,0 +1,25 @@
+@import "../../consts/consts.scss";
+@import "../../consts/mixins.scss";
+
+.task-sector {
+  @include to-center_column($align: center, $justify: flex-start);
+  position: relative;
+  width: 80%;
+  @include border-style(
+    $color: rgb(165, 195, 220),
+    $width: 3px,
+    $style-top: solid,
+    $style-left: solid,
+    $style-right: solid,
+    $style-bottom: solid
+  );
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  padding: 5px;
+}
+.task-sector__background {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+}

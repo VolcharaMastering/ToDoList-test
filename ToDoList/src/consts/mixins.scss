@@ -1,0 +1,60 @@
+@import "./consts.scss";
+
+@mixin to-center_row($align: center, $justify: space-between) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+@mixin to-center_column($align: space-between, $justify: center) {
+  display: flex;
+  flex-direction: column;
+  align-items: $align;
+  justify-content: $justify;
+}
+@mixin font-style(
+  $font-family: $main-font-family,
+  $font-size: 20px,
+  $font-weight: 400,
+  $color: $main-text-color
+) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  color: $color;
+}
+@mixin border-style(
+  $color: linear-gradient(#f69d3c, #3f87a6),
+  $width: 1px,
+  $style-top: solid,
+  $style-left: solid,
+  $style-right: solid,
+  $style-bottom: solid
+) {
+  border-top: $width $style-top $color;
+  border-left: $width $style-left $color;
+  border-right: $width $style-right $color;
+  border-bottom: $width $style-bottom $color;
+}
+@mixin menu-style() {
+  width: 60%;
+  font-size: 18px;
+}
+@mixin sub-menu-style {
+  @include to-center_row();
+  list-style-type: none;
+}
+@mixin transition-for-text($transition: $transition-value) {
+  transition: $transition;
+}
+@mixin link-list($color: $main-text-color) {
+  text-decoration: none;
+  color: $main-text-color;
+}
+@mixin bookmark-link-hover(
+  $opacity: 80%,
+  $text-shadow: 1px 1px 1px $hover-text-shadow
+) {
+  opacity: $opacity;
+  cursor: pointer;
+  text-shadow: $text-shadow;
+}

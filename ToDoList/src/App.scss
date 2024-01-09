@@ -1,0 +1,9 @@
+@import "./consts/consts.scss";
+@import "./consts/mixins.scss";
+
+.main{
+    @include to-center_column($align: center, $justify: flex-start);
+    height: 100vh;
+    width: 80%;
+    // background: #e4dddd url(./assets/background.svg) no-repeat center;
+};
