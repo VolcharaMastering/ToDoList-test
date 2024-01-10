@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { getToDoList } from "../../api/toDoListApi";
-import TaskBar from "../TaskBar/TaskBar";
+import { useDispatch, useSelector } from "react-redux";
 import "./TaskSector.scss";
+import { axiosToDoList } from "../../store/slices/toDoListSlice";
+import TaskBar from "../TaskBar/TaskBar";
 
 function TaskSector() {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.toDoList.toDoList);
   const [toDoList, setToDoList] = useState();
 
   const apiRequest = async () => {
-    const gotTasks = await getToDoList();
-    setToDoList(gotTasks);
-    console.log("inFunc", gotTasks);
+    setToDoList(tasks);
   };
   useEffect(() => {
-    apiRequest();
+    dispatch(axiosToDoList());
   }, []);
   useEffect(() => {
+    apiRequest();
     console.log("effect ", toDoList);
-  }, [toDoList]);
+  }, [tasks]);
   return toDoList ? (
     <section className="task-sector">
       {toDoList.map((task) => (

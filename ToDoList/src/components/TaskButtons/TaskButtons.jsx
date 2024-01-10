@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import "./TaskButtons.scss";
-import { updateTask } from "../../api/toDoListApi";
+import { deleteTask, updateTask } from "../../api/toDoListApi";
 import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
 import { useEffect } from "react";
 
@@ -22,6 +22,9 @@ function TaskButtons({ task, setTask }) {
   };
   const handleConfirm = () => {
     setConfirmPopup(true);
+  };
+  const handleDeleteTask = async () => {
+    await deleteTask(task._id);
   };
 
   // useEffect(() => {
@@ -62,8 +65,8 @@ function TaskButtons({ task, setTask }) {
       <button
         className="taskButton__button taskButton__button_delete"
         type="button"
-        onClick={handleConfirm}
-        aria-label="Pause task"
+        onClick={handleDeleteTask}
+        aria-label="Delete task"
       ></button>
 
       {confirmPopup && <ConfirmPopup task={task._id} />}
