@@ -14,7 +14,10 @@ const getToDoList = async () => {
 const addTask = async (taskData) => {
   try {
     const data = await axios.post(`${url}/task`, {
-      taskData,
+      title: taskData.title,
+      description: taskData.description,
+      state: taskData.state,
+      taskLink: taskData.taskLink,
     });
     return data;
   } catch (error) {
@@ -24,10 +27,14 @@ const addTask = async (taskData) => {
 };
 const updateTask = async (taskId, taskData) => {
   try {
-    const data = await axios.put(`${url}/task/:${taskId}`, {
-      taskData,
+    const data = await axios.put(`${url}/task/${taskId}`, {
+      title: taskData.title,
+      description: taskData.description,
+      state: taskData.state,
+      taskLink: taskData.taskLink,
     });
-    return data;
+    console.log("DATA", data.data);
+    return data.data;
   } catch (error) {
     console.log(error);
     throw error;
@@ -35,7 +42,7 @@ const updateTask = async (taskId, taskData) => {
 };
 const deleteTask = async (taskId) => {
   try {
-    const data = await axios.delete(`${url}/task/:${taskId}`, {
+    const data = await axios.delete(`${url}/task/${taskId}`, {
       taskId,
     });
     return data;
@@ -44,5 +51,4 @@ const deleteTask = async (taskId) => {
     throw error;
   }
 };
-// export { getToDoList };
 export { getToDoList, addTask, updateTask, deleteTask };

@@ -1,0 +1,31 @@
+@import "../../consts/consts.scss";
+@import "../../consts/mixins.scss";
+
+.taskButton {
+  width: 115px;
+  @include to-center_row();
+  .taskButton__button {
+    height: 25px;
+    width: 25px;
+    border: none;
+    background: none;
+  }
+  .taskButton__button:hover {
+    @include bookmark-link-hover();
+  }
+  .taskButton__button_start {
+    background-image: url(../../assets/start-icon.svg);
+  }
+  .taskButton__button_done {
+    background-image: url(../../assets/done-icon.svg);
+  }
+  .taskButton__button_pause {
+    background-image: url(../../assets/pause-icon.svg);
+  }
+  .taskButton__button_edit {
+    background-image: url(../../assets/edit-iconl.svg);
+  }
+  .taskButton__button_delete {
+    background-image: url(../../assets/delete-icon.svg);
+  }
+}
