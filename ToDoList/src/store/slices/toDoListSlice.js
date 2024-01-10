@@ -62,11 +62,9 @@ export const toDoListSlice = createSlice({
         state.error = null;
       })
       .addCase(axiosAddTask.fulfilled, (state, action) => {
-        state.loading = false;
         state.toDoList.push(action.payload);
       })
       .addCase(axiosAddTask.rejected, (state, action) => {
-        state.loading = false;
         state.error = action.error.message;
       })
       .addCase(axiosDeleteTask.pending, (state) => {
@@ -84,7 +82,7 @@ export const toDoListSlice = createSlice({
       .addCase(axiosEditTask.fulfilled, (state, action) => {
         const editedTask = action.payload;
         state.toDoList = state.toDoList.map((task) => {
-          if (task.id === editedTask.id) {
+          if (task._id === editedTask._id) {
             return editedTask;
           }
           return task;

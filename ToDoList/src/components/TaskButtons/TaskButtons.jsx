@@ -1,11 +1,17 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import "./TaskButtons.scss";
-import { deleteTask, updateTask } from "../../api/toDoListApi";
 import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
-import { useEffect } from "react";
+import {
+  axiosDeleteTask,
+  axiosEditTask,
+  axiosToDoList,
+} from "../../store/slices/toDoListSlice";
 
-function TaskButtons({ task, setTask }) {
+function TaskButtons({ task }) {
+  const dispatch = useDispatch();
+
   const [taskPopup, setTaskPopup] = useState(false);
   const [confirmPopup, setConfirmPopup] = useState();
 
@@ -13,23 +19,30 @@ function TaskButtons({ task, setTask }) {
     setTaskPopup(true);
   };
   const toggleState = async () => {
-    if (task.state != "in_process") {
-      task.state = "in_process";
-    } else {
-      task.state = "paused";
+    const sendState = task.state != "in_process" ? "in_process" : "paused";
+
+    try {
+      dispatch(
+        axiosEditTask({
+          taskId: task._id,
+          taskData: { ...task, state: sendState },
+        })
+      );
+    } catch (error) {
+      console.error("Error deleting task:", error);
     }
-    setTask(await updateTask(task._id, task));
   };
   const handleConfirm = () => {
     setConfirmPopup(true);
   };
   const handleDeleteTask = async () => {
-    await deleteTask(task._id);
+    try {
+      dispatch(axiosDeleteTask(task._id));
+      dispatch(axiosToDoList());
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
-
-  // useEffect(() => {
-  //   console.log("TASKSTATE", task.state, task);
-  // }, [task]);
 
   return (
     // task &&
