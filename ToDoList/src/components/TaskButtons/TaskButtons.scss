@@ -13,6 +13,10 @@
   .taskButton__button:hover {
     @include bookmark-link-hover();
   }
+  .taskButton__button_inactive{
+    opacity: .1;
+    pointer-events: none;
+  }
   .taskButton__button_start {
     background-image: url(../../assets/start-icon.svg);
   }

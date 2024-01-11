@@ -10,7 +10,6 @@ export const axiosToDoList = createAsyncThunk(
   "toDoList/axiosToDoList",
   async () => {
     const result = await getToDoList();
-    console.log("in dispatch", result);
     return result;
   }
 );
@@ -18,14 +17,22 @@ export const axiosToDoList = createAsyncThunk(
 export const axiosAddTask = createAsyncThunk(
   "toDoList/addTask",
   async (newTaskData) => {
-    return addTask(newTaskData);
+    const response = await addTask(newTaskData);
+    const responseData = {
+      data: response.data,
+    };
+    return responseData;
   }
 );
 
 export const axiosDeleteTask = createAsyncThunk(
   "toDoList/deleteTask",
   async (taskId) => {
-    return deleteTask(taskId);
+    const response = await deleteTask(taskId);
+    const responseData = {
+      data: response.data,
+    };
+    return responseData;
   }
 );
 
@@ -51,18 +58,16 @@ export const toDoListSlice = createSlice({
         state.error = null;
       })
       .addCase(axiosToDoList.fulfilled, (state, action) => {
-        console.log("InStaTE" ,action.payload );
         state.toDoList = action.payload;
       })
       .addCase(axiosToDoList.rejected, (state, action) => {
-        console.log("InStaTE ER" ,action.error.message);
         state.error = action.error.message;
       })
       .addCase(axiosAddTask.pending, (state) => {
         state.error = null;
       })
       .addCase(axiosAddTask.fulfilled, (state, action) => {
-        state.toDoList.push(action.payload);
+        state.toDoList.unshift(action.payload.data);
       })
       .addCase(axiosAddTask.rejected, (state, action) => {
         state.error = action.error.message;

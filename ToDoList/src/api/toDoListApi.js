@@ -4,7 +4,6 @@ const url = "http://localhost:3000";
 const getToDoList = async () => {
   try {
     const data = await axios.get(url);
-    console.log("API data", data.data);
     return data.data;
   } catch (error) {
     console.log(error);
@@ -33,7 +32,6 @@ const updateTask = async (taskId, taskData) => {
       state: taskData.state,
       taskLink: taskData.taskLink,
     });
-    console.log("DATA", data.data);
     return data.data;
   } catch (error) {
     console.log(error);

@@ -1,26 +1,27 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./TaskButtons.scss";
-import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
 import {
   axiosDeleteTask,
   axiosEditTask,
   axiosToDoList,
 } from "../../store/slices/toDoListSlice";
+import { openPopup } from "../../store/slices/togglePopupSlice";
+import PopupForm from "../PopupForm/PopupForm";
 
 function TaskButtons({ task }) {
+  const isPopupOpen = useSelector(
+    (state) => state.popup.updateTaskPopup[task._id]
+  );
   const dispatch = useDispatch();
-
-  const [taskPopup, setTaskPopup] = useState(false);
-  const [confirmPopup, setConfirmPopup] = useState();
-
-  const handleUpdateTask = () => {
-    setTaskPopup(true);
+  const openUpdateTaskPopup = () => {
+    dispatch(
+      openPopup({ popupType: "updateTask", isOpen: true, taskId: task._id })
+    );
   };
+
   const toggleState = async () => {
     const sendState = task.state != "in_process" ? "in_process" : "paused";
-
     try {
       dispatch(
         axiosEditTask({
@@ -29,61 +30,74 @@ function TaskButtons({ task }) {
         })
       );
     } catch (error) {
-      console.error("Error deleting task:", error);
+      console.error("Error updating task:", error);
     }
   };
-  const handleConfirm = () => {
-    setConfirmPopup(true);
+  const setDoneState = async () => {
+    try {
+      dispatch(
+        axiosEditTask({
+          taskId: task._id,
+          taskData: { ...task, state: "done" },
+        })
+      );
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
   };
   const handleDeleteTask = async () => {
     try {
-      dispatch(axiosDeleteTask(task._id));
-      dispatch(axiosToDoList());
+      await dispatch(axiosDeleteTask(task._id));
+      await dispatch(axiosToDoList());
     } catch (error) {
       console.error("Error deleting task:", error);
     }
   };
 
   return (
-    // task &&
-    <div className="taskButton">
-      {task.state != "in_process" ? (
-        <button
-          className="taskButton__button taskButton__button_start"
-          type="button"
-          onClick={toggleState}
-          aria-label="Start task"
-        ></button>
-      ) : (
-        <button
-          className="taskButton__button taskButton__button_pause"
-          type="button"
-          onClick={toggleState}
-          aria-label="Pause task"
-        ></button>
+    <>
+      {isPopupOpen && (
+        <PopupForm title={`Изменить ${task.title}`} data={task} />
       )}
+      <div className="taskButton">
+        {task.state != "in_process" ? (
+          <button
+            className="taskButton__button taskButton__button_start"
+            type="button"
+            onClick={toggleState}
+            aria-label="Start task"
+          ></button>
+        ) : (
+          <button
+            className="taskButton__button taskButton__button_pause"
+            type="button"
+            onClick={toggleState}
+            aria-label="Pause task"
+          ></button>
+        )}
 
-      <button
-        className={`taskButton__button  taskButton__button_done ${task.state} === "done" && "taskButton__button_inactive"`}
-        type="button"
-        onClick={handleConfirm}
-        aria-label="Done task"
-      ></button>
-      <button
-        className="taskButton__button taskButton__button_edit"
-        type="button"
-        onClick={handleUpdateTask}
-        aria-label="Update task"
-      ></button>
-      <button
-        className="taskButton__button taskButton__button_delete"
-        type="button"
-        onClick={handleDeleteTask}
-        aria-label="Delete task"
-      ></button>
-
-      {confirmPopup && <ConfirmPopup task={task._id} />}
-    </div>
+        <button
+          className={`taskButton__button  taskButton__button_done ${
+            task.state === "done" && "taskButton__button_inactive"
+          }`}
+          type="button"
+          onClick={setDoneState}
+          aria-label="Done task"
+        ></button>
+        <button
+          className="taskButton__button taskButton__button_edit"
+          type="button"
+          onClick={openUpdateTaskPopup}
+          aria-label="Update task"
+        ></button>
+        <button
+          className="taskButton__button taskButton__button_delete"
+          type="button"
+          onClick={handleDeleteTask}
+          aria-label="Delete task"
+        ></button>
+      </div>
+    </>
   );
 }
 

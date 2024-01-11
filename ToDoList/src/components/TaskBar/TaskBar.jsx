@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 
-import { useState, useEffect } from "react";
 import TaskButtons from "../TaskButtons/TaskButtons";
 import "./TaskBar.scss";
 
@@ -14,7 +13,9 @@ function TaskBar({ gotTask }) {
         </div>
         {gotTask && <TaskButtons task={gotTask} />}
       </div>
-      <p className="task-bar__description">{gotTask.description}</p>
+      <p className="task-bar__description">
+        {gotTask.taskLink && `Ссылка: ${gotTask.taskLink} `}&nbsp;{gotTask.description}
+      </p>
       <div className="task-bar__dates">
         <p className="task-bar__date">создано: {gotTask.addDate}</p>
         <p className="task-bar__date">

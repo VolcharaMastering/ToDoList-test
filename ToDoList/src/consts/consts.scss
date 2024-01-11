@@ -4,6 +4,4 @@ $main-font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 $body-width: 70vw;
 $hover-text-shadow: rgb(56, 43, 43);
 
-$transition-value: opacity .2s linear, text-shadow .3s linear;
-
-// "done", "in_process", "paused", "not_started"
+$transition-value: opacity 0.2s linear, text-shadow 0.3s linear;

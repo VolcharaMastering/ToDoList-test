@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import "./App.scss";
 import TaskSector from "./components/TaskSector/TaskSector";
 import TheHeader from "./components/TheHeader/TheHeader";

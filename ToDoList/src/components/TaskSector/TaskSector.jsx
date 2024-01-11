@@ -20,7 +20,6 @@ function TaskSector() {
   }, []);
   useEffect(() => {
     apiRequest();
-    console.log("effect ", toDoList);
   }, [tasks]);
   return toDoList ? (
     <section className="task-sector">

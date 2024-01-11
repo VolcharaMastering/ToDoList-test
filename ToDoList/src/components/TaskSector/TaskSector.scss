@@ -3,7 +3,6 @@
 
 .task-sector {
   @include to-center_column($align: center, $justify: flex-start);
-  position: relative;
   width: 80%;
   @include border-style(
     $color: rgb(165, 195, 220),
