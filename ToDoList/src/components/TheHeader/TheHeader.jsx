@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "./TheHeader.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { openPopup } from "../../store/slices/togglePopupSlice";
@@ -30,7 +30,7 @@ function TheHeader() {
         </button>
         <nav className="header__menu">
           <li className="header__bookmark">
-            <Link to="/" className="header__bookmark-text">
+            {/* <Link to="/" className="header__bookmark-text">
               Все
             </Link>
           </li>
@@ -52,7 +52,30 @@ function TheHeader() {
           <li className="header__bookmark">
             <Link to="/paused" className="header__bookmark-text">
               Приостановлены
-            </Link>
+            </Link> */}
+                        <div className="header__bookmark-text">
+              Все
+            </div>
+          </li>
+          <li className="header__bookmark">
+            <div className="header__bookmark-text">
+              В работе
+            </div>
+          </li>
+          <li className="header__bookmark">
+            <div className="header__bookmark-text">
+              Новые
+            </div>
+          </li>
+          <li className="header__bookmark">
+            <div className="header__bookmark-text">
+              Выполнено
+            </div>
+          </li>
+          <li className="header__bookmark">
+            <div className="header__bookmark-text">
+              Приостановлены
+            </div>
           </li>
         </nav>
       </header>
