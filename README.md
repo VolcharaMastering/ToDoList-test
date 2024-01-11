@@ -28,8 +28,8 @@
 - Axios *для запросов в API*
 - Prettier и Eslint *Для стандартизации и форматирования кода (prettier настроен локально)*
 - Express.js - *web-сервер*
-- celebrate/joi - *Валидаци на стороне бекэнда*
-- MongoDB - *Баща данных (Требуется версия не ниже 4.0.0. Причина: "immutable option")*
+- celebrate/joi - *Валидация на стороне бекэнда*
+- MongoDB - *База данных (Требуется версия не ниже 4.0.0. Причина: "immutable option")*
 - mongoose - *Работа с MongoDB*
 - nodemon - *Для работы с бекэндом в режиме разработки*
 - .env - *содержит только NODE_ENV=production и MONGO_URL=mongodb://localhost:27017/tasksdb* 
