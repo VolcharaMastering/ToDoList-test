@@ -1,0 +1,25 @@
+@import "./consts/consts.scss";
+@import "./consts/mixins.scss";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+width: 100vw;
+  height: 100vh;
+  
+}
+#root {
+  width: 100%;
+  overflow-x: hidden;
+  @include font-style();
+  @include to-center_column(center, space-between);
+  h1 {
+    @include font-style($font-family: $main-font-family, $font-size: 30px,
+      $font-weight: 700);}
+}
+

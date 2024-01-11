@@ -1,0 +1,58 @@
+@import "../../consts/consts.scss";
+@import "../../consts/mixins.scss";
+
+.task-bar {
+  margin-top: 5px;
+  @include border-style(
+    $color: black,
+    $width: 3px,
+    $style-top: solid,
+    $style-left: solid,
+    $style-right: solid,
+    $style-bottom: solid
+  );
+  width: 100%;
+  box-shadow: 3px 3px rgb(190, 161, 161), -1em 0 0.4em rgb(246, 246, 197);
+  @include to-center_column();
+
+  .task-bar__header {
+    @include border-style(
+      $color: black,
+      $width: 2px,
+      $style-top: none,
+      $style-left: none,
+      $style-right: none,
+      $style-bottom: ridge
+    );
+
+    @include to-center_row();
+    padding: 0 5px;
+    .task-bar__header-box {
+      @include to-center_row();
+      width: 75%;
+      .task-bar__title {
+        @include font-style($font-size: 25px, $font-weight: 600);
+      }
+      .task-bar__state {
+        font: caption;
+      }
+    }
+  }
+  .task-bar:not(:first-of-type) {
+    margin-top: 5px;
+  }
+  .task-bar__description {
+    @include font-style($font-size: 14px);
+    box-sizing: border-box;
+    height: 60px;
+    overflow-y: scroll;
+  }
+  .task-bar__dates {
+    @include font-style($font-size: 14px);
+    @include to-center_row();
+    .task-bar__date {
+      @include to-center_row();
+      font-style: italic;
+    }
+  }
+}

@@ -25,7 +25,7 @@ const toDoListSchema = new mongoose.Schema({
   state: {
     type: String,
     default: "not_started",
-    enum: ["done", "in_process", "paused", "not_started", "stopped"],
+    enum: ["done", "in_process", "paused", "not_started"],
     required: false,
   },
   taskLink: {

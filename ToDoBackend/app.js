@@ -7,7 +7,7 @@ const rateLimit = require("./utils/rateLimit");
 const errorHandler = require("./middlewares/errorHandler");
 const NotFound = require("./errors/notFound");
 
-const { PORT = 3040, NODE_ENV, MONGO_URL } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_URL } = process.env;
 const app = express();
 
 app.use(cors());

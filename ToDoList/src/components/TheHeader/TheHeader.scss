@@ -1,0 +1,32 @@
+@import "../../consts/consts.scss";
+@import "../../consts/mixins.scss";
+
+.header {
+  width: 80%;
+  height: 95px;
+  @include to-center_column($align: center, $justify: flex-end);
+}
+.header__button {
+  width: 100px;
+  height: 30px;
+}
+.header__menu {
+  width: 100%;
+  @include to-center_row($justify: space-between);
+  @include sub-menu-style();
+}
+.header__bookmark {
+  width: inherit;
+  background-color: rgb(165, 195, 220);
+  clip-path: polygon(3% 0, 97% 0px, 100% 100%, 0% 100%);
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  text-align: center;
+}
+.header__bookmark:hover {
+  @include bookmark-link-hover();
+}
+.header__bookmark-text {
+  @include font-style($font-size: 16px);
+  @include link-list();
+}
